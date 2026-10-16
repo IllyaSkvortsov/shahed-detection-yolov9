@@ -134,7 +134,7 @@ shahed-detection-yolov9/
 ### Acknowledgments
 - **Datasets:** thanks to the authors of the three Roboflow Universe datasets used
   for training (CC BY 4.0, linked in the [Dataset](#dataset) section).
-- **Model & framework:** [Ultralytics](https://github.com/ultralytics/ultralytics) for the
+- **Model & framework:** Thank you [Ultralytics](https://github.com/ultralytics/ultralytics) for the
   training and inference tooling, and the authors of YOLOv9
   ([Wang, Yeh, Liao, 2024, arXiv:2402.13616](https://arxiv.org/abs/2402.13616);
   [original repo](https://github.com/WongKinYiu/yolov9)).
