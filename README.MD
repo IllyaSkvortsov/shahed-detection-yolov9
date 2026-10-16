@@ -43,8 +43,8 @@ Trained on a merge of three Roboflow Universe datasets (all CC BY 4.0):
 
 License: https://creativecommons.org/licenses/by/4.0/
 
-Changes: merged the three datasets, remapped classes to a `bird`, `not`, `shahed` classes
-The dataset is not redistributed in this repo.
+- Changes: merged the three datasets, remapped classes to a `bird`, `not`, `shahed` classes. 
+- The dataset is not redistributed in this repo.
 
 * Note: After reviewing the datasets, it is quite likely that the merged dataset contains a sizable amount of 
  duplicates or near duplicates which were not filtered out before training.
