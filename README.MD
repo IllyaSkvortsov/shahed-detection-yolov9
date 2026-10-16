@@ -138,8 +138,7 @@ shahed-detection-yolov9/
   training and inference tooling, and the authors of YOLOv9
   ([Wang, Yeh, Liao, 2024, arXiv:2402.13616](https://arxiv.org/abs/2402.13616);
   [original repo](https://github.com/WongKinYiu/yolov9)).
-- **Demo footage:** clips shown in the demo come from third-party sources (linked under
-  each GIF). All rights remain with their respective owners, and the footage is shown
+- **Demo footage:** clips shown in the demo come from third-party sources. All rights remain with their respective owners, and the footage is shown
   only to illustrate model behavior.
 
 ### License
