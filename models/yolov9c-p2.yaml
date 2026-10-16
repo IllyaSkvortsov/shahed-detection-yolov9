@@ -1,0 +1,56 @@
+# Custom YOLOv9c variant: adds a P2/4 detection head for small/distant objects.
+# Based on ultralytics/cfg/models/v9/yolov9c.yaml
+#
+# WHY: standard YOLOv9c only detects at P3/P4/P5 (8x/16x/32x downsampling).
+# A shahed drone at range can be a handful of pixels wide -- by the time
+# features reach P3 (1/8 resolution) that signal can be mostly gone.
+# Adding a P2 head (1/4 resolution) recovers finer spatial detail at the cost
+# of more compute and a higher false-positive rate on noise/clutter, so
+# validate carefully and expect to tune conf threshold per head.
+#
+# Layer numbering changed vs the original because of the inserted P2 branch --
+# that's the kind of thing to check in Netron (https://netron.app) or via
+# model.model to confirm indices before further edits.
+
+nc: 3 # bird, not, shahed -- update if your class list changes
+
+backbone:
+  - [-1, 1, Conv, [64, 3, 2]] # 0-P1/2
+  - [-1, 1, Conv, [128, 3, 2]] # 1-P2/4
+  - [-1, 1, RepNCSPELAN4, [256, 128, 64, 1]] # 2
+  - [-1, 1, ADown, [256]] # 3-P3/8
+  - [-1, 1, RepNCSPELAN4, [512, 256, 128, 1]] # 4
+  - [-1, 1, ADown, [512]] # 5-P4/16
+  - [-1, 1, RepNCSPELAN4, [512, 512, 256, 1]] # 6
+  - [-1, 1, ADown, [512]] # 7-P5/32
+  - [-1, 1, RepNCSPELAN4, [512, 512, 256, 1]] # 8
+  - [-1, 1, SPPELAN, [512, 256]] # 9
+
+head:
+  - [-1, 1, nn.Upsample, [None, 2, "nearest"]]
+  - [[-1, 6], 1, Concat, [1]] # cat backbone P4
+  - [-1, 1, RepNCSPELAN4, [512, 512, 256, 1]] # 12
+
+  - [-1, 1, nn.Upsample, [None, 2, "nearest"]]
+  - [[-1, 4], 1, Concat, [1]] # cat backbone P3
+  - [-1, 1, RepNCSPELAN4, [256, 256, 128, 1]] # 15 (P3/8-small)
+
+  # --- new: extend up to P2/4 for small-object detection ---
+  - [-1, 1, nn.Upsample, [None, 2, "nearest"]]
+  - [[-1, 2], 1, Concat, [1]] # cat backbone P2 (layer 2)
+  - [-1, 1, RepNCSPELAN4, [128, 128, 64, 1]] # 18 (P2/4-xsmall)
+  # -----------------------------------------------------------
+
+  - [-1, 1, ADown, [128]]
+  - [[-1, 15], 1, Concat, [1]] # cat head P3
+  - [-1, 1, RepNCSPELAN4, [256, 256, 128, 1]] # 21 (P3/8-small)
+
+  - [-1, 1, ADown, [256]]
+  - [[-1, 12], 1, Concat, [1]] # cat head P4
+  - [-1, 1, RepNCSPELAN4, [512, 512, 256, 1]] # 24 (P4/16-medium)
+
+  - [-1, 1, ADown, [512]]
+  - [[-1, 9], 1, Concat, [1]] # cat head P5
+  - [-1, 1, RepNCSPELAN4, [512, 512, 256, 1]] # 27 (P5/32-large)
+
+  - [[18, 21, 24, 27], 1, Detect, [nc]] # Detect(P2, P3, P4, P5)
