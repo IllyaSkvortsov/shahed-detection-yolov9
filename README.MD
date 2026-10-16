@@ -1,6 +1,6 @@
 # Shahed Drone Detector (YOLOv9)
 
-Model that detects Shahed-type drones in daytime environment; struggles with distant/low-contrast targets.
+Model that detects Shahed-type drones in daytime environment; as of now, struggles with distant/low-contrast targets.
 
 ## Demo
 ![Detection on a daytime video](assets/detection_examples/clear_sky.gif)
