@@ -143,9 +143,9 @@ shahed-detection-yolov9/
   only to illustrate model behavior.
 
 ### License
-Code in this repository is released under AGPL-3.0. 
-Ultralytics is licensed under AGPL-3.0.
-Datasets keep their original CC BY 4.0 licenses.
+- Code in this repository is released under AGPL-3.0. 
+- Ultralytics is licensed under AGPL-3.0.
+- Datasets keep their original CC BY 4.0 licenses.
 
 ### Disclaimer
 This is a personal research and portfolio project, provided as is, without warranty
