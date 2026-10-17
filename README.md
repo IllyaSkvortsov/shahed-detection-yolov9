@@ -109,19 +109,20 @@ python scripts/train.py \
 
 ## Project Structure
 ```
-shahed-detection-yolov9/
-├── assets/                       # media (demo GIFs, plots)
-│   ├── clear_sky.gif
-│   ├── box_size_distribution.png
-│   └── class_balance.png
-├── scripts/
-│   ├── train.py                  # training entry point
-│   ├── infer_realtime.py         # webcam / video / stream inference
-│   └── inspect_dataset.py        # dataset stats, class balance, duplicate check
-├── models/
-│   └── yolov9c-p2.yaml           # custom architecture with P2/4 head
-├── .gitignore
-└── README.md
+  shahed-detection-yolov9/
+   ├── assets/
+   │   ├── detection_examples/   # demo GIFs
+   │   └── graphs/               # results.png, box_size_distribution.png, class_balance.png
+   ├── scripts/
+   │   ├── train.py                  # training entry point
+   │   ├── infer_realtime.py         # webcam / video / stream inference
+   │   └── inspect_dataset.py        # dataset stats, class balance, duplicate check
+   ├── models/
+   │   └── yolov9c-p2.yaml           # custom architecture with P2/4 head
+   ├── LICENSE
+   ├── requirements.txt
+   ├── .gitignore
+   └── README.md
 ```
 
 ## Roadmap
